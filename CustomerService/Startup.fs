@@ -22,11 +22,11 @@ type Startup private () =
     // This method gets called by the runtime. Use this method to add services to the container.
     member this.ConfigureServices(services: IServiceCollection) =
         // Add framework services.
-        Console.Write("Starting 3")
+        Console.Write("Starting 3\n")
 
         services.AddControllers() |> ignore
         services.AddDbContext<CustomerContext>(fun options -> options.UseSqlServer("Data Source=localhost;Initial Catalog=eventuate;User Id=sa;Password=App@Passw0rd") |> ignore) |> ignore // options.UseInMemoryDatabase("DB_ToDo")
-        Console.Write("Starting 4")
+        Console.Write("Starting 4\n")
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     member this.Configure(app: IApplicationBuilder, env: IWebHostEnvironment) =

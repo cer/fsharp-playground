@@ -31,6 +31,21 @@ services:
     working_dir: /scripts
     entrypoint: [ "bash", "./entrypoint.sh" ]
 
+  dbquery:
+   # The mssql-tools image seems to only have a "latest" tag, so specifying the digest here to ensure a specific version is used
+    image: mcr.microsoft.com/mssql-tools@sha256:62556500522072535cb3df2bb5965333dded9be47000473e9e0f84118e248642
+    depends_on:
+    - db
+    environment:
+      TRAM_DB_SERVER: "db"
+      TRAM_SA_PASSWORD: "App@Passw0rd"
+      TRAM_DB: "eventuate"
+      TRAM_SCHEMA: "eventuate"
+    volumes:
+    - ./TestDatabase:/scripts
+    working_dir: /scripts
+    entrypoint: [ "bash", "./entrypoint-query.sh" ]
+
   db:
     image: "mcr.microsoft.com/mssql/server"
     environment:

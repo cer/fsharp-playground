@@ -10,6 +10,7 @@ open CustomerService
 
 open CustomerService.DataContext
 open CustomerService.Models
+open System.Transactions;
 
 [<ApiController>]
 [<Route("[controller]")>]
@@ -31,20 +32,24 @@ type WeatherForecastController private() =
 
     [<HttpPost>]
     [<Route("/items")>]
-    member this.Post([<FromBody>] _ToDoItem : Customer) =
+    member this.Post([<FromBody>] _ToDoItem : Customer) : IActionResult =
         if (base.ModelState.IsValid) then 
             if not( isNull _ToDoItem.Name ) then
                 if ( _ToDoItem.Id <> 0 ) then //check if the ID is set
-                    ActionResult<IActionResult>(base.BadRequest("BAD REQUEST, the ToDoItemID is autoincremented")) // the ToDoItem is autoincremented
+                    upcast base.BadRequest("BAD REQUEST, the ToDoItemID is autoincremented") // the ToDoItem is autoincremented
                 else 
-                        Initialize(this._Context)
+                    let newItem = using(new TransactionScope()) ( fun scope -> 
                         this._Context.ToDoItems.Add(_ToDoItem) |> ignore
                         this._Context.SaveChanges() |> ignore
-                        ActionResult<IActionResult>(base.Ok(this._Context.ToDoItems.Last()))
+                        let newItem = this._Context.ToDoItems.AsEnumerable().Last()
+                        scope.Complete()
+                        newItem
+                    )
+                    upcast base.Ok(newItem)
             else
-                ActionResult<IActionResult>(base.BadRequest("BAD REQUEST!, the field Initials can not be null"))                    
+                upcast base.BadRequest("BAD REQUEST!, the field Initials can not be null")
         else
-            ActionResult<IActionResult>(base.BadRequest(base.ModelState))
+            upcast base.BadRequest(base.ModelState)
 
     [<DefaultValue>]
     val mutable _Context : CustomerContext

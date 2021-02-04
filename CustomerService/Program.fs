@@ -24,12 +24,13 @@ module Program =
 
     [<EntryPoint>]
     let main args =
-        Console.Write("Starting")
+        Console.Write("Starting\n")
         let host = CreateHostBuilder(args).Build()
-        // use scope = host.Services.CreateScope()
-        // let services = scope.ServiceProvider
-        let context = host.Services.GetRequiredService<CustomerContext>()
-        Console.Write("Starting 2")
+        use scope = host.Services.CreateScope()
+        
+        let services = scope.ServiceProvider
+        Console.Write("Starting 2\n")
+        let context = services.GetRequiredService<CustomerContext>()
         Initialize(context) |> ignore
 
         host.Run()
