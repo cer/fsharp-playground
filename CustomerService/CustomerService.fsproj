@@ -6,11 +6,11 @@
 
   <ItemGroup>
     <Compile Include="WeatherForecast.fs" />
-    
+
     <Compile Include="Models/Customer.fs" />
     <Compile Include="Data/CustomerContext.fs" />
-    
-    <Compile Include="Controllers/WeatherForecastController.fs" />
+
+    <Compile Include="Controllers/CustomerController.fs" />
     <Compile Include="Startup.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>

@@ -1,22 +1,11 @@
 
-CREATE TABLE $(TRAM_SCHEMA).ToDoItemsX (
-  id VARCHAR(450),
+CREATE TABLE $(TRAM_SCHEMA).dbo._Customers (
+  id INT IDENTITY(1,1),
   name VARCHAR(450)
 );
 
 Go
 
-SELECT * FROM $(TRAM_SCHEMA).ToDoItemsX;
-
-Go
-
-CREATE TABLE $(TRAM_SCHEMA).dbo._ToDoItemsX (
-  id VARCHAR(450),
-  name VARCHAR(450)
-);
-
-Go
-
-SELECT * FROM $(TRAM_SCHEMA).dbo._ToDoItemsX;
+SELECT * FROM $(TRAM_SCHEMA).dbo._Customers;
 
 Go

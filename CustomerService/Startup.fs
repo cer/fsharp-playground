@@ -25,7 +25,7 @@ type Startup private () =
         Console.Write("Starting 3\n")
 
         services.AddControllers() |> ignore
-        services.AddDbContext<CustomerContext>(fun options -> options.UseSqlServer("Data Source=localhost;Initial Catalog=eventuate;User Id=sa;Password=App@Passw0rd") |> ignore) |> ignore // options.UseInMemoryDatabase("DB_ToDo")
+        services.AddDbContext<CustomerContext>(fun options -> options.UseSqlServer("Data Source=localhost;Initial Catalog=eventuate;User Id=sa;Password=App@Passw0rd").EnableSensitiveDataLogging(true) |> ignore) |> ignore // options.UseInMemoryDatabase("DB_ToDo")
         Console.Write("Starting 4\n")
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
