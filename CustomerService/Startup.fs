@@ -21,7 +21,7 @@ type Startup private () =
 
     member this.ConfigureServices(services: IServiceCollection) =
         services.AddControllers() |> ignore
-        services.AddDbContext<CustomerContext>(fun options -> options.UseSqlServer("Data Source=localhost;Initial Catalog=eventuate;User Id=sa;Password=App@Passw0rd").EnableSensitiveDataLogging(true) |> ignore) |> ignore // options.UseInMemoryDatabase("DB_ToDo")
+        services.AddDbContext<CustomerContext>(fun options -> options.UseSqlServer("Data Source=db;Initial Catalog=eventuate;User Id=sa;Password=App@Passw0rd").EnableSensitiveDataLogging(true) |> ignore) |> ignore // options.UseInMemoryDatabase("DB_ToDo")
 
     member this.Configure(app: IApplicationBuilder, env: IWebHostEnvironment) =
         if (env.IsDevelopment()) then

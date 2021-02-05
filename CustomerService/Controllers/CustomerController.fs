@@ -46,6 +46,18 @@ type CustomerController private() =
         else
             upcast base.BadRequest(base.ModelState)
 
+    [<HttpGet("{id}")>]
+    member this.Get(id:int) : IActionResult = 
+        if base.ModelState.IsValid then 
+            //if not ( this._Context.CustomerExist(id) ) then
+            //    upcast base.NotFound("Customer not found")
+            //else
+            match this._Context.GetCustomer(id) with
+            | None -> upcast base.NotFound("Customer not found")
+            | Some c -> upcast base.Ok(c)
+        else
+            upcast base.BadRequest(base.ModelState)
+
     [<DefaultValue>]
     val mutable _Context : CustomerContext
 

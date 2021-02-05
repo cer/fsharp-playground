@@ -17,7 +17,8 @@ module DataContext =
 
         member this.CustomerExist (id:int) = this.Customers.Any(fun x -> x.Id = id)
 
-        member this.GetCustomer (id:int) = this.Customers.Find(id)
+        member this.GetCustomer (id:int) : Customer option = let c = this.Customers.Find(id)
+                                                             if box c <> null then Some(c) else None
 
     let Initialize (context : CustomerContext) =
         context.Database.EnsureCreated() |> ignore

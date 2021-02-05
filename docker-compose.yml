@@ -94,3 +94,17 @@ services:
       EVENTUATE_CDC_PIPELINE_PIPELINE1_TYPE: eventuate-tram
       EVENTUATE_CDC_PIPELINE_PIPELINE1_READER: READER1
       EVENTUATE_CDC_PIPELINE_PIPELINE1_EVENTUATEDATABASESCHEMA: eventuate
+
+  customer-service:
+    image: customer-service
+    environment:
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+    build:
+      context: .
+      dockerfile: CustomerService/Dockerfile
+    ports:
+      - "8081:80"
+    container_name: customer-service
+    depends_on:
+     - db
+      
