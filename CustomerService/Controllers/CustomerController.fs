@@ -23,12 +23,10 @@ type CustomerController private() =
         this._logger <- logger
 
     [<HttpGet>]
-    [<Route("/items")>]
     member this.GetItms() =
         ActionResult<IEnumerable<Customer>>(this._Context.Customers)
 
     [<HttpPost>]
-    [<Route("/items")>]
     member this.Post([<FromBody>] _Customer : Customer) : IActionResult =
         if (base.ModelState.IsValid) then
             if not( isNull _Customer.Name ) then
